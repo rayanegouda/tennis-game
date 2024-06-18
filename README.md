@@ -1,5 +1,5 @@
 ![img.png](img.png)
-# Tennis GAME
+# Tennis Game
 
 This Kata goal is to implement a simple tennis score computer.
 
