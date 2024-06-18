@@ -20,7 +20,9 @@ If the player with advantage wins the ball he wins the game
 If the player without advantage wins the ball they are back at “deuce”.
 
 Here we want you to develop a java method that will take a String as input containing the character ‘A’ or ‘B’.
+
 The character ‘A’ corresponding to “player A won the ball”, and ‘B’ corresponding to “player B won the ball”.
+
 The java method should print the score after each won ball (for example : “Player A : 15 / Player B : 30”) and print the winner
 of the game.
 
