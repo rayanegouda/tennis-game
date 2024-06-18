@@ -1,10 +1,12 @@
 package com.app.tennis;
 
 
-import org.apache.log4j.Logger;
-public class App
-{
-	private static final Logger logger = Logger.getLogger(App.class);
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+public class App {
+	private static final Logger logger = LogManager.getLogger(App.class);
+
 	/**
 	 * Point d'entrée principal pour exécuter le jeu de tennis avec une séquence d'entrées.
 	 *
@@ -12,12 +14,15 @@ public class App
 	 */
 	public static void main(String[] args) {
 		TennisGame game = new TennisGame();
-		String input = "ABABAAZ"; // 'Z' is an invalid input to test the exception
+		String input = args[0]; // "ABAZBAA" is an invalid input to test the exception
 		for (char c : input.toCharArray()) {
 			try {
 				game.pointWonBy(c);
 			} catch (InvalidPlayerException e) {
 				logger.error(e.getMessage());
+			}
+			if (TennisGame.endOfGame) {
+				break;
 			}
 		}
 	}

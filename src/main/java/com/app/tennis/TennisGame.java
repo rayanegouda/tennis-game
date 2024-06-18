@@ -2,7 +2,8 @@ package com.app.tennis;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 
 /**
@@ -11,15 +12,21 @@ import org.apache.log4j.Logger;
  * de deuce et d'avantage.
  */
 public class TennisGame {
-	private static final Logger logger = Logger.getLogger(TennisGame.class);
-    @Getter @Setter
+	private static final Logger logger = LogManager.getLogger(TennisGame.class);
+	@Getter
+	@Setter
 	private int playerAScore;
-	@Getter @Setter
+	@Getter
+	@Setter
 	private int playerBScore;
-	@Getter @Setter
+	@Getter
+	@Setter
 	private boolean playerAAdvantage;
-	@Getter @Setter
+	@Getter
+	@Setter
 	private boolean playerBAdvantage;
+
+	public static boolean endOfGame;
 
 	/**
 	 * Constructeur par défaut qui initialise les scores et les avantages des joueurs.
@@ -29,6 +36,7 @@ public class TennisGame {
 		this.playerBScore = 0;
 		this.playerAAdvantage = false;
 		this.playerBAdvantage = false;
+		endOfGame = false;
 	}
 
 	/**
@@ -59,6 +67,7 @@ public class TennisGame {
 		if (isDeuce()) {
 			if (playerAAdvantage) {
 				logger.info("Player A wins the game");
+				endOfGame = true;
 			} else if (playerBAdvantage) {
 				playerBAdvantage = false;
 			} else {
@@ -66,6 +75,7 @@ public class TennisGame {
 			}
 		} else if (playerAScore == 40) {
 			logger.info("Player A wins the game");
+			endOfGame = true;
 		} else {
 			playerAScore = nextScore(playerAScore);
 		}
@@ -74,10 +84,11 @@ public class TennisGame {
 	/**
 	 * Gère le point gagné par le joueur B et met à jour le score en conséquence.
 	 */
-	private void handlePointWonByB() {
+	public void handlePointWonByB() {
 		if (isDeuce()) {
 			if (playerBAdvantage) {
 				logger.info("Player B wins the game");
+				endOfGame = true;
 			} else if (playerAAdvantage) {
 				playerAAdvantage = false;
 			} else {
@@ -85,6 +96,7 @@ public class TennisGame {
 			}
 		} else if (playerBScore == 40) {
 			logger.info("Player B wins the game");
+			endOfGame = true;
 		} else {
 			playerBScore = nextScore(playerBScore);
 		}
@@ -95,8 +107,8 @@ public class TennisGame {
 	 *
 	 * @return true si les deux joueurs ont 40 points, sinon false.
 	 */
-	private boolean isDeuce() {
-		return playerAScore == 40 && playerBScore == 40;
+	public boolean isDeuce() {
+		return playerAScore == 40 && playerBScore == 40 && !endOfGame;
 	}
 
 	/**
@@ -105,34 +117,40 @@ public class TennisGame {
 	 * @param currentScore Le score actuel du joueur.
 	 * @return Le score suivant du joueur.
 	 */
-	private int nextScore(int currentScore) {
+	public int nextScore(int currentScore) {
 		switch (currentScore) {
-			case 0: return 15;
-			case 15: return 30;
-			case 30: return 40;
-			default: return currentScore;
+			case 0:
+				return 15;
+			case 15:
+				return 30;
+			case 30:
+				return 40;
+			default:
+				return currentScore;
 		}
 	}
 
 	/**
 	 * Affiche le score actuel des deux joueurs.
 	 */
-	private String printScore() {
+	public String printScore() {
 		String score;
-		if (isDeuce()) {
+		if (endOfGame) {
+			score = "";
+		} else if (isDeuce()) {
 			if (playerAAdvantage) {
 				logger.info("Player A : ADV / Player B : 40");
-				score="Player A : ADV / Player B : 40";
+				score = "Player A : ADV / Player B : 40";
 			} else if (playerBAdvantage) {
 				logger.info("Player A : 40 / Player B : ADV");
-				score="Player A : 40 / Player B : ADV";
+				score = "Player A : 40 / Player B : ADV";
 			} else {
 				logger.info("Player A : 40 / Player B : 40 (Deuce)");
-				score="Player A : 40 / Player B : 40 (Deuce)";
+				score = "Player A : 40 / Player B : 40 (Deuce)";
 			}
 		} else {
 			logger.info("Player A : " + playerAScore + " / Player B : " + playerBScore);
-			score="Player A : " + playerAScore + " / Player B : " + playerBScore;
+			score = "Player A : " + playerAScore + " / Player B : " + playerBScore;
 		}
 		return score;
 	}
@@ -143,7 +161,7 @@ public class TennisGame {
 	 * @param player Le caractère représentant le joueur ('A' ou 'B').
 	 * @throws InvalidPlayerException si l'entrée du joueur est invalide.
 	 */
-	private void validatePlayerInput(char player) throws InvalidPlayerException {
+	public void validatePlayerInput(char player) throws InvalidPlayerException {
 		if (player != 'A' && player != 'B') {
 			throw new InvalidPlayerException("Invalid player input: " + player);
 		}
