@@ -13,20 +13,15 @@ import org.apache.logging.log4j.Logger;
  */
 public class TennisGame {
 	private static final Logger logger = LogManager.getLogger(TennisGame.class);
-	@Getter
-	@Setter
-	private int playerAScore;
-	@Getter
-	@Setter
-	private int playerBScore;
-	@Getter
-	@Setter
-	private boolean playerAAdvantage;
-	@Getter
-	@Setter
-	private boolean playerBAdvantage;
-
 	public static boolean endOfGame;
+	@Getter @Setter
+	private int playerAScore;
+	@Getter @Setter
+	private int playerBScore;
+	@Getter @Setter
+	private boolean playerAAdvantage;
+	@Getter @Setter
+	private boolean playerBAdvantage;
 
 	/**
 	 * Constructeur par défaut qui initialise les scores et les avantages des joueurs.

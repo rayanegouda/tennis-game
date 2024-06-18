@@ -11,8 +11,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class TennisGameTest {
 
-	private TennisGame tennisGame;
 	private static final Logger logger = LogManager.getLogger(TennisGame.class);
+	private TennisGame tennisGame;
 	private TestAppender testAppender;
 
 
