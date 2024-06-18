@@ -8,6 +8,9 @@ import org.apache.logging.log4j.core.layout.PatternLayout;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * TestAppender pour les tests unitaires sur les sorties de logs.
+ */
 public class TestAppender extends AbstractAppender {
 
 	private final List<String> logMessages = new ArrayList<>();
